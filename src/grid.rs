@@ -25,6 +25,7 @@ impl Grid {
         let a = coord.a();
         let r = coord.r();
         let c = coord.c();
+
         match a {
             0 => self.array_0.get(&(*r, *c)).map(Rc::as_ref),
             1 => self.array_1.get(&(*r, *c)).map(Rc::as_ref),
@@ -56,8 +57,8 @@ impl Grid {
         seed: &C,
     ) -> Vec<impl Coord + Debug> {
         let mut coords: Vec<(i32, i32, i32)> = vec![];
-
         let mut cell = (*seed.a(), *seed.r(), *seed.c());
+
         for i in 0..width {
             cell = cell.near(axe_a);
             coords.push(cell.clone());
@@ -72,151 +73,13 @@ impl Grid {
         coords
     }
 
-    pub fn nearest_neighbords<C: Coord>(&self, coord: &C) -> Vec<impl Coord + Debug> {
+    pub fn nearest_neighbords<C: Coord>(&self, coord: &C) -> Vec<&f64> {
         let a = coord.a();
         let r = coord.r();
         let c = coord.c();
 
-        let mut neighbords: Vec<(i32, i32, i32)> = vec![];
-
-        for dir in Dir::iter() {
-            let coord = dir.apply(&(*a, *r, *c));
-            if self.get(&coord).is_some() {
-                println!("{coord:?}");
-                neighbords.push(coord);
-            }
-        }
-
-        neighbords
+        Dir::iter()
+            .filter_map(|dir| self.get(&dir.apply(&(*a, *r, *c))))
+            .collect()
     }
-
-    // pub fn generate(width: i32) -> Self {
-    //     let mut grid = Grid::new();
-
-    //     let seed = (0, 0, 0);
-    //     grid.insert(seed, Cell::Empty(Region::White));
-
-    //     // Green
-    //     grid.generate_region(
-    //         (1, 0, -1),
-    //         (-1, 1, 0),
-    //         width,
-    //         seed,
-    //         Cell::Empty(Region::Green),
-    //     );
-
-    //     // // Yellow
-    // grid.generate_region(
-    //     (1, -1, 0),
-    //     (0, 1, -1),
-    //     width,
-    //     seed,
-    //     Cell::Empty(Region::Yellow),
-    // );
-
-    // // Orange
-    // grid.generate_region(
-    //     (0, -1, 1),
-    //     (1, 0, -1),
-    //     width,
-    //     seed,
-    //     Cell::Empty(Region::Orange),
-    // );
-
-    // // Red
-    // grid.generate_region(
-    //     (-1, 0, 1),
-    //     (1, -1, 0),
-    //     width,
-    //     seed,
-    //     Cell::Empty(Region::Red),
-    // );
-
-    // // Violet
-    // grid.generate_region(
-    //     (-1, 1, 0),
-    //     (0, -1, 1),
-    //     width,
-    //     seed,
-    //     Cell::Empty(Region::Violet),
-    // );
-
-    // // Blue
-    // grid.generate_region(
-    //     (0, 1, -1),
-    //     (-1, 0, 1),
-    //     width,
-    //     seed,
-    //     Cell::Empty(Region::Blue),
-    // );
-
-    //     grid
-    // }
-
-    // pub fn get(&self, coord: &(i32, i32, i32)) -> Option<&Cell> {
-    //     self.cells.get(coord)
-    // }
-
-    // pub fn insert(&mut self, coord: (i32, i32, i32), cell: Cell) -> Option<Cell> {
-    //     self.cells.insert(coord, cell)
-    // }
-
-    // pub fn len(&self) -> usize {
-    //     self.cells.len()
-    // }
-
-    // pub fn nearest_neighbors(&self, x: &i32, y: &i32, z: &i32) -> Vec<&Cell> {
-    //     let mut neighbors = vec![];
-
-    //     if let Some(neighbor) = self.get(x, &(y + 1), &(z - 1)) {
-    //         neighbors.push(neighbor);
-    //     }
-
-    //     if let Some(neighbor) = self.get(&(x + 1), y, &(z - 1)) {
-    //         neighbors.push(neighbor);
-    //     }
-
-    //     if let Some(neighbor) = self.get(&(x + 1), &(y - 1), z) {
-    //         neighbors.push(neighbor);
-    //     }
-
-    //     if let Some(neighbor) = self.get(x, &(y - 1), &(z + 1)) {
-    //         neighbors.push(neighbor);
-    //     }
-
-    //     if let Some(neighbor) = self.get(&(x - 1), y, &(z + 1)) {
-    //         neighbors.push(neighbor);
-    //     }
-
-    //     if let Some(neighbor) = self.get(&(x - 1), &(y + 1), z) {
-    //         neighbors.push(neighbor);
-    //     }
-
-    //     neighbors
-    // }
-
-    // fn generate_next_cell(seed: &(i32, i32, i32), dir: &(i32, i32, i32)) -> (i32, i32, i32) {
-    //     (seed.0 + dir.0, seed.1 + dir.1, seed.2 + dir.2)
-    // }
-
-    // fn generate_region(
-    //     &mut self,
-    //     axe_1: (i32, i32, i32),
-    //     axe_2: (i32, i32, i32),
-    //     width: i32,
-    //     seed: (i32, i32, i32),
-    //     cell: Cell,
-    // ) {
-    //     let mut coord_a = seed;
-    //     for i in 0..width {
-    //         coord_a = Self::generate_next_cell(&coord_a, &axe_1);
-    //         self.insert(coord_a, cell.clone());
-
-    //         let mut coord_b = coord_a;
-    //         for _ in 0..i {
-    //             coord_b = Self::generate_next_cell(&coord_b, &axe_2);
-    //             self.insert(coord_b, cell.clone());
-    //         }
-    //     }
-    // }
 }

@@ -9,8 +9,10 @@ mod grid;
 
 fn main() {
     let mut grid = Grid::new();
+
     grid.insert((0, 0, 0), 1.0);
-    grid.insert((1, 0, 1), 2.0);
+    grid.insert((0, 0, 1), 2.0);
+    grid.insert((0, 0, -1), 3.0);
 
     let v = grid.nearest_neighbords(&(0, 0, 0));
     println!("{v:?}");
