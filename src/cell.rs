@@ -1,16 +1,17 @@
+use std::rc::Rc;
+
 #[derive(Debug, Clone, Copy)]
-pub enum Cell {
-    Empty(Region),
+enum Cell {
+    Empty(),
     Post,
 }
 
-#[derive(Debug, Clone, Copy)]
-pub enum Region {
+enum Region {
     White,
-    Green,
-    Yellow,
-    Orange,
-    Red,
-    Violet,
-    Blue,
+    Green(Rc<(i32, i32, i32)>, Rc<(i32, i32, i32)>),
+    Yellow(Rc<(i32, i32, i32)>, Rc<(i32, i32, i32)>),
+    Orange(Rc<(i32, i32, i32)>, Rc<(i32, i32, i32)>),
+    Red(Rc<(i32, i32, i32)>, Rc<(i32, i32, i32)>),
+    Violet(Rc<(i32, i32, i32)>, Rc<(i32, i32, i32)>),
+    Blue(Rc<(i32, i32, i32)>, Rc<(i32, i32, i32)>),
 }

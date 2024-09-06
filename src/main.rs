@@ -1,12 +1,14 @@
+use coord::{Coord, Near};
 use grid::Grid;
 
 mod cell;
+mod coord;
 mod grid;
 
 fn main() {
-    let mut grid = Grid::generate(3);
+    let mut grid = Grid::new();
 
-    let n = grid.nearest_neighbors(&0, &0, &0);
-
-    println!("{:?}", n);
+    for c in grid.create_region(&(1, 1, 1), &(1, 1, 1), 3, &(0, 0, 0)) {
+        println!("{c:?}");
+    }
 }
