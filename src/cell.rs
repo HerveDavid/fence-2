@@ -1,11 +1,16 @@
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy)]
 pub enum Cell {
-    Empty,
+    Empty(Region),
     Post,
 }
 
-impl Default for Cell {
-    fn default() -> Self {
-        Self::Empty
-    }
+#[derive(Debug, Clone, Copy)]
+pub enum Region {
+    White,
+    Green,
+    Yellow,
+    Orange,
+    Red,
+    Violet,
+    Blue,
 }
