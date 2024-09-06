@@ -32,7 +32,7 @@ impl Dir<(i32, i32, i32)> {
             Dir::W(f) => f(cell),
         }
     }
-    pub fn nearest_neighbors() -> Iter<'static, Dir<(i32, i32, i32)>> {
+    pub fn iter() -> Iter<'static, Dir<(i32, i32, i32)>> {
         DIR.iter()
     }
 }

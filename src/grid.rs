@@ -1,4 +1,4 @@
-use crate::coord::Near;
+use crate::{coord::Near, dir::Dir};
 use std::{cell, collections::HashMap, fmt::Debug, i32, rc::Rc};
 
 use crate::coord::Coord;
@@ -70,6 +70,24 @@ impl Grid {
         }
 
         coords
+    }
+
+    pub fn nearest_neighbords<C: Coord>(&self, coord: &C) -> Vec<impl Coord + Debug> {
+        let a = coord.a();
+        let r = coord.r();
+        let c = coord.c();
+
+        let mut neighbords: Vec<(i32, i32, i32)> = vec![];
+
+        for dir in Dir::iter() {
+            let coord = dir.apply(&(*a, *r, *c));
+            if self.get(&coord).is_some() {
+                println!("{coord:?}");
+                neighbords.push(coord);
+            }
+        }
+
+        neighbords
     }
 
     // pub fn generate(width: i32) -> Self {
